@@ -1,11 +1,11 @@
-{% extends 'pl/base.html' %} {% block title %} O nas {% endblock %} {% block content %}
+{% extends 'en/base.html' %} {% block title %} About Us {% endblock %} {% block content %}
 
 <div class="accordion p-md-5" id="accordionExample">
 	<div class="card bg-dark">
 		<div class="card-header" id="headingOne">
 			<h2 class="mb-0">
 				<button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          O nas
+          About Us
         </button>
       </h2>
     </div>
@@ -15,8 +15,8 @@
         <div class="col-md-5 p-lg-5 mx-auto my-5">
 					<p class="display-4 font-weight-normal">
 
-          <h1>O nas</h1>
-					<a>Strona stworzona przez ATcat pl</a>
+          <h1>About Us</h1>
+					<a>Page made by ATcat pl</a>
 				</div>
 				<div class="product-device box-shadow d-none d-md-block"></div>
 				<div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
@@ -35,16 +35,16 @@
       <div class="card-body">
           <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-dark" style="color:white">
           <div class="col-md-5 p-lg-5 mx-auto my-5">
-            <h1 class="display-4 font-weight-normal">Kontakt</h1>
+            <h1 class="display-4 font-weight-normal">Contact</h1>
             <p class="lead font-weight-normal"><!--Text--> <div class="btn-group">
               <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Maile
+                Mail
               </button>
               <div class="dropdown-menu">
-                <a class="dropdown-item" href="mailto://atcat.pl.yt@outlook.com">Pomoc</a>
-                <a class="dropdown-item" href="mailto://atcat.pl.yt@outlook.com">Inne</a>
+                <a class="dropdown-item" href="mailto://atcat.pl.yt@outlook.com">Help</a>
+                <a class="dropdown-item" href="mailto://atcat.pl.yt@outlook.com">Other</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{ url_for('help_page') }}"><button type="button" class="btn btn-danger">Przycisk nie działa</button></a>
+                <a class="dropdown-item" href="{{ url_for('help_page') }}"><button type="button" class="btn btn-danger">Button not working</button></a>
               </div>
             </div>
           </div>
