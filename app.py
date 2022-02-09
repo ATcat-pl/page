@@ -118,10 +118,10 @@ def log(name, path):
             f = open("log/" + today.strftime("%d-%m-%Y") + ".txt", 'x')
         t = time.localtime()
         f.write("{\nTime: "+ f"{t.tm_hour}:{t.tm_min}:{t.tm_sec} \n" + "Request: " + path + ", file: " + name + "\n" + "IP: " + str(request.remote_addr) + "\n" + "User-Agent: " + str(request.headers.get('User-Agent')) + "\n" + "Languages: " + str(request.accept_languages) + "\n" + "}\n")
-        print(request.remote_addr)
-        print(request.headers.get('User-Agent'))
-        print(request.accept_languages)
         f.close()
+    print(request.remote_addr)
+    print(request.headers.get('User-Agent'))
+    print(request.accept_languages)
 
     old = today - timedelta(days=10)
     if os.path.isfile("log/"+old.strftime("%d-%m-%Y")+".txt"):
