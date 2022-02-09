@@ -1,0 +1,124 @@
+{% extends 'base.html' %} 
+{% block title %}
+    Moje kanały YouTube
+{% endblock %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="mój_kanał_yt.css" type="text/css" />
+	<title>Mój kanał youtube - ATcat</title>
+	<link rel="shortcut icon" href="ikona.ico" type="icon">
+</head>
+
+<body>
+	<div class="accordion p-md-5" id="gluwne">
+		<div class="card bg-dark">
+			<div class="card-header" id="headingOne">
+				<h2 class="mb-0">
+					<button style="color:white" class="btn btn-block text-left">
+          Moje kanały YouTube
+        </button>
+      </h2>
+    </div>
+    <div class="card-header" id="headingOne">
+      <h2 class="mb-0">
+        <button class="btn btn-link btn-block text-left" onclick="location.href='https://www.youtube.com/channel/UCOhwZ0Bm4BGljq65BcmiXag';">
+          ATcat pl 2
+        </button>
+      </h2>
+    </div>
+
+    <div id="collapseOne1" class="collapse show bg-dark" aria-labelledby="headingOne" data-parent="#accordionExample">
+      <div class="card-body">
+        <div class="accordion" id="gluwne">
+  <div class="card bg-dark">
+    <div class="card-header" id="headingOne">
+      <h2 class="mb-0">
+        <button style="color:white" class="btn btn-block text-left">
+          Gry
+        </button>
+      </h2>
+    </div>
+    <div class="card-header" id="headingOne">
+      <h2 class="mb-0">
+        <button class="btn btn-link btn-block text-left" type="button" onclick="location.href='https://www.youtube.com/channel/UCOhwZ0Bm4BGljq65BcmiXag/search?query=Minecraft';">
+          Minecraft
+        </button>
+      </h2>
+    </div>
+
+    <div id="minecraft" class="collapse show bg-dark" aria-labelledby="minecraft" data-parent="#accordionExample">
+      <div class="card-body">
+        <p>Playlisty</p>
+        <ul>
+          <li><button type="button" class="btn btn-outline-secondary" style="color:white"  onclick="location.href='https://www.youtube.com/playlist?list=PLd2Y_C7RDTms9G4TUfuQs66sH7_l7tmxM';">Minecraft 1.16.5 z modami</button></li>
+          <li><button type="button" class="btn btn-outline-secondary" style="color:white" onclick="location.href='https://www.youtube.com/playlist?list=PLd2Y_C7RDTmvQYESayDz23Q0F0r4cb2dZ';">Minecraft create mod</button></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card bg-dark">
+    <div class="card-header" id="headingTwo">
+      <h2 class="mb-0">
+        <button class="btn btn-link btn-block text-left collapsed" onclick="location.href='https://www.youtube.com/channel/UCOhwZ0Bm4BGljq65BcmiXag/search?query=ETS2';">
+          ETS2
+        </button>
+      </h2>
+    </div>
+    <div id="collapseTwo" class="collapse show bg-dark" aria-labelledby="headingTwo" data-parent="#accordionExample">
+      <div class="card-body">
+        <p>Playlisty</p>
+        <ul>
+          <li><button type="button" class="btn btn-outline-secondary" style="color:white" onclick="location.href='https://www.youtube.com/playlist?list=PLd2Y_C7RDTmtu-1PsbenKtLWGwz3PkN5q';">ETS2 - Moje save</button></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+      </div>
+    </div>
+  </div>
+  <div class="card bg-dark">
+    <div class="card-header" id="headingTwo">
+      <h2 class="mb-0">
+        <button onclick="location.href='https://www.youtube.com/channel/UCDnS32QDMHhn1Mfn9dB_YWQ';" class="btn btn-link btn-block text-left collapsed">
+          ATcat pl
+        </button>
+      </h2>
+    </div>
+    <div id="collapseTwo2" class="collapse show bg-dark" aria-labelledby="headingTwo" data-parent="#gluwne">
+      <div class="card-body">
+        <p>Tu są tylko animacje i kiedyś były gry.</p>
+      </div>
+    </div>
+  </div>
+  <!--
+    <p>
+    <ul id="menu">
+      <li>Kanały</li>
+      <ol>
+        <li><a onclick="location.href='https://www.youtube.com/channel/UCOhwZ0Bm4BGljq65BcmiXag';">ATcat pl 2</a></li>
+        <ol>
+          <ui><a>• gry:</a></ui>
+          <ol>
+            <ui><a>• Minecraft</a></ui>
+          </ol>
+          <li>Playlisty</li>
+          <ol>
+            <li onclick="location.href='https://www.youtube.com/playlist?list=PLd2Y_C7RDTms9G4TUfuQs66sH7_l7tmxM';">Minecraft 1.16.5 z modami</li>
+           <li onclick="location.href='https://www.youtube.com/playlist?list=PLd2Y_C7RDTmvQYESayDz23Q0F0r4cb2dZ';">Minecraft create mod</li>
+          </ol>
+        </ol>
+        <li><a onclick="location.href='https://www.youtube.com/channel/UCDnS32QDMHhn1Mfn9dB_YWQ';">ATcat pl</a></li>
+        <ol>
+          <ui><a>• animacje</a></ui>
+        </ol>
+      </ol>
+    </ul>-->
+    </body>
+    </html>
+{% endblock %}

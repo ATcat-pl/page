@@ -1,0 +1,96 @@
+<!--
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="I">
+    <link rel="stylesheet" href="style_zdan.css" type="text/css">
+    <title>2S1B</title>
+    <link rel="shortcut icon" href="ikona.ico" type="icon">
+</head>
+<body background-color=A3A3A3>
+  <p>Uwaga strona nie dokończona.</p>
+  <ul id="menu">
+    <li>Info o serwerze</li>
+    <ul>
+      <li>Ip serwera: 2s1b.fun</li>
+      <li><button onclick="location.href='https://discord.gg/gAFc25u2';">Discord</button></li>
+    </ul>
+  </ul>
+</body>
+-->
+{% extends 'base.html' %} {% block title %} 2S1B {% endblock %} {% block content %}
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<div class="accordion p-md-5" id="accordionExample">
+	<div class="card bg-dark">
+		<div class="card-header" id="headingOne">
+			<h2 class="mb-0">
+				<p class="btn btn-link btn-block text-left">
+          Info o serwerze
+        </p>
+      </h2>
+    </div>
+
+    <div id="collapseOne" class="collapse show bg-dark" aria-labelledby="headingOne" data-parent="#accordionExample">
+      <div class="card-body">
+        <div class="col-md-5 p-lg-5 mx-auto my-5">
+					<p class="display-4 font-weight-normal">
+
+          <h1>Info o serwerze</h1>
+					<p>Ip serwera: 2s1b.fun</p>
+
+				</div>
+				<div class="product-device box-shadow d-none d-md-block"></div>
+				<div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
+      </div>
+    </div>
+  </div>
+  <div class="card bg-dark">
+    <div class="card-header" id="headingTwo">
+      <h2 class="mb-0">
+        <p class="btn btn-link btn-block text-left collapsed">
+          Kontakt
+        </p>
+      </h2>
+    </div>
+    <div id="collapseTwo" aria-labelledby="headingTwo" data-parent="#accordionExample">
+      <div class="card-body">
+          <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-dark" style="color:white">
+          <div class="col-md-5 p-lg-5 mx-auto my-5">
+            <h1 class="display-4 font-weight-normal">Kontakt</h1>
+            <p class="lead font-weight-normal"><!--Text--> 
+            <p><button type="button" class="btn btn-primary" onclick="location.href='https://discord.gg/78XneMp25r';">Discord</button></p>
+            <div class="btn-group">
+              <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Maile
+              </button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item">Brak obsługiwanych maili</a>
+                <div class="dropdown-divider"></div>
+              </div>
+            </div>
+          </div>
+          <div class="product-device box-shadow d-none d-md-block"></div>
+          <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card bg-dark">
+    <div class="card-header" id="headingThree">
+      <h2 class="mb-0">
+        <p class="btn btn-link btn-block text-left collapsed">
+          Discord
+        </p>
+      </h2>
+    </div>
+    <div id="collapseThree" class="collapse show bg-dark" aria-labelledby="headingThree" data-parent="#accordionExample">
+      <div class="card-body">
+        <center><iframe src="https://titanembeds.com/embed/876809170114985984" height="600" width="800" frameborder="0"></iframe></center>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

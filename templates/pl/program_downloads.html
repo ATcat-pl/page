@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}
+    Pobrania
+{% endblock %}
+{% block content %}
+    <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-dark" style="color:white">
+        <div class="col-md-5 p-lg-5 mx-auto my-5">
+            <h1 class="display-4 font-weight-normal">Programy</h1>
+            <p class="lead font-weight-normal"><!--Tu wstaw podpis--></p>
+            <button type="button" onclick="location.href='https://github.com/ATcat-pl/page-data-host/raw/main/ATcat%20Print%20Installer.exe';" class="btn btn-secondary">ATcat Print </button>
+            <button type="button" onclick="location.href='https://github.com/ATcat-pl/page-data-host/raw/main/Notatnik%20ATcat.exe';" class="btn btn-secondary">Notatnik ATcat</button>
+            <button type="button" onclick="location.href='{{ url_for('program_downloads_gra_miasta') }}';" class="btn btn-secondary">Miasta Gra</button>
+        </div>
+        <div class="product-device box-shadow d-none d-md-block"></div>
+        <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
+    </div>
+{% endblock %}
