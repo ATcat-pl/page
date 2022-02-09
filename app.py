@@ -7,7 +7,7 @@ from datetime import date, timedelta
 from flask import render_template, redirect, url_for, flash, request, Flask
 
 app = Flask(__name__)
-
+app.config['SECRET_KEY'] = "edrftghyujikmlo,ikujhygtrf"
 
 @app.route("/")
 def home():
