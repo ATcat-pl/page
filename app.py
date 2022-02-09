@@ -1,8 +1,6 @@
-import datetime
-
 import requests
 import os
-from datetime import date
+from datetime import date, timedelta
 from flask import render_template, redirect, url_for, flash, request, Flask
 
 app = Flask(__name__)
@@ -110,17 +108,18 @@ def render(name, path):
 
 def log(name, path):
     today = date.today()
-    if os.path.isfile("log/" + today.strftime("%d-%m-%Y") + ".txt"):
-        f = open("log/" + today.strftime("%d-%m-%Y") + ".txt", 'a')
-    else:
-        f = open("log/" + today.strftime("%d-%m-%Y") + ".txt", 'x')
-    f.write("{\n" + "request: " + path + ", file: " + name + "\n" + "IP: " + str(request.remote_addr) + "\n" + "User-Agent: " + str(request.headers.get('User-Agent')) + "\n" + "Languages: " + str(request.accept_languages) + "\n" + "}\n")
-    print(request.remote_addr)
-    print(request.headers.get('User-Agent'))
-    print(request.accept_languages)
-    f.close()
+    if not str(request.headers.get('User-Agent')) in "UptimeRobot":
+        if os.path.isfile("log/" + today.strftime("%d-%m-%Y") + ".txt"):
+            f = open("log/" + today.strftime("%d-%m-%Y") + ".txt", 'a')
+        else:
+            f = open("log/" + today.strftime("%d-%m-%Y") + ".txt", 'x')
+        f.write("{\n" + "request: " + path + ", file: " + name + "\n" + "IP: " + str(request.remote_addr) + "\n" + "User-Agent: " + str(request.headers.get('User-Agent')) + "\n" + "Languages: " + str(request.accept_languages) + "\n" + "}\n")
+        print(request.remote_addr)
+        print(request.headers.get('User-Agent'))
+        print(request.accept_languages)
+        f.close()
 
-    old = today - datetime.timedelta(days=10)
+    old = today - timedelta(days=10)
     if os.path.isfile("log/"+old.strftime("%d-%m-%Y")+".txt"):
         os.remove("log/"+old.strftime("%d-%m-%Y")+".txt")
-        print("log/"+old.strftime("%d-%m-%Y")+".txt")
+        print("removed: log/"+old.strftime("%d-%m-%Y")+".txt")
