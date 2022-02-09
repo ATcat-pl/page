@@ -1,3 +1,6 @@
+import datetime
+import time
+
 import requests
 import os
 from datetime import date, timedelta
@@ -113,7 +116,8 @@ def log(name, path):
             f = open("log/" + today.strftime("%d-%m-%Y") + ".txt", 'a')
         else:
             f = open("log/" + today.strftime("%d-%m-%Y") + ".txt", 'x')
-        f.write("{\n" + "request: " + path + ", file: " + name + "\n" + "IP: " + str(request.remote_addr) + "\n" + "User-Agent: " + str(request.headers.get('User-Agent')) + "\n" + "Languages: " + str(request.accept_languages) + "\n" + "}\n")
+        t = time.localtime()
+        f.write("{\nTime: "+ f"{t.tm_hour}:{t.tm_min}:{t.tm_sec} \n" + "Request: " + path + ", file: " + name + "\n" + "IP: " + str(request.remote_addr) + "\n" + "User-Agent: " + str(request.headers.get('User-Agent')) + "\n" + "Languages: " + str(request.accept_languages) + "\n" + "}\n")
         print(request.remote_addr)
         print(request.headers.get('User-Agent'))
         print(request.accept_languages)
