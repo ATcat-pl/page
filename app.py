@@ -111,7 +111,7 @@ def render(name, path):
 
 def log(name, path):
     today = date.today()
-    if not str(request.headers.get('User-Agent')) in "UptimeRobot":
+    if "UptimeRobot" not in str(request.headers.get('User-Agent')):
         if os.path.isfile("log/" + today.strftime("%d-%m-%Y") + ".txt"):
             f = open("log/" + today.strftime("%d-%m-%Y") + ".txt", 'a')
         else:
