@@ -101,12 +101,13 @@ def PrtToDataBusBoardsSeries1():
 def render(name, path):
     lang = str(request.accept_languages)
     language = lang.split(",")
+    ip = str(request.remote_addr)
     if (language[0] == "pl"):
         log("pl/" + name, path)
-        return render_template("pl/" + name)
+        return render_template("pl/" + name, ip=ip)
     else:
         log("en/" + name, path)
-        return render_template("en/" + name)
+        return render_template("en/" + name, ip=ip)
 
 
 def log(name, path):
