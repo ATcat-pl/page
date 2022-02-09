@@ -1,4 +1,6 @@
 import requests
+import os
+from datetime import date
 from flask import render_template, redirect, url_for, flash, request, Flask
 
 app = Flask(__name__)
@@ -87,6 +89,25 @@ def render(name):
     lang = str(request.accept_languages)
     language = lang.split(",")
     if (language[0] == "pl"):
+        log("pl/" + name)
         return render_template("pl/" + name)
     else:
+        log("en/" + name)
         return render_template("en/" + name)
+
+def log(name):
+    today = date.today()
+    if os.path.isfile("log/" + today.strftime("%d-%m-%Y") + ".txt"):
+        f = open("log/" + today.strftime("%d-%m-%Y") + ".txt", 'a')
+    else:
+        f = open("log/" + today.strftime("%d-%m-%Y") + ".txt", 'x')
+    f.write("{\n")
+    f.write("request: " + name + "\n")
+    f.write("IP: " + str(request.remote_addr) + "\n")
+    print(request.remote_addr)
+    f.write("User-Agent: " + str(request.headers.get('User-Agent')) + "\n")
+    print(request.headers.get('User-Agent'))
+    f.write("Languages: " + str(request.accept_languages) + "\n")
+    print(request.accept_languages)
+    f.write("}\n")
+    f.close()
