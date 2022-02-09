@@ -103,14 +103,14 @@ def render(name, path):
     language = lang.split(",")
     ip = str(request.remote_addr)
     if (language[0] == "pl"):
-        log("pl/" + name, path)
+        log("pl/" + name)
         return render_template("pl/" + name, ip="   Twoje IP: "+ip)
     else:
-        log("en/" + name, path)
+        log("en/" + name)
         return render_template("en/" + name, ip="   Your IP: "+ip)
 
 
-def log(name, path):
+def log(name):
     today = date.today()
     if "UptimeRobot" not in str(request.headers.get('User-Agent')):
         if os.path.isfile("log/" + today.strftime("%d-%m-%Y") + ".txt"):
@@ -118,7 +118,7 @@ def log(name, path):
         else:
             f = open("log/" + today.strftime("%d-%m-%Y") + ".txt", 'x')
         t = time.localtime()
-        f.write("{\nTime: "+ f"{t.tm_hour}:{t.tm_min}:{t.tm_sec} \n" + "Request: " + path + ", file: " + name + "\n" + "IP: " + str(request.remote_addr) + "\n" + "User-Agent: " + str(request.headers.get('User-Agent')) + "\n" + "Languages: " + str(request.accept_languages) + "\n" + "}\n")
+        f.write("{\nTime: "+ f"{t.tm_hour}:{t.tm_min}:{t.tm_sec} \n" + "Request: " + request.path + ", file: " + name + "\nSecure: "+str(bool(request.is_secure))+"\nIP: " + str(request.remote_addr) + "\nTransmission method: "+ str(request.method) + "\nScheme: " + request.scheme + "\nUser-Agent: " + str(request.headers.get('User-Agent')) + "\n" + "Languages: " + str(request.accept_languages) + "\n" + "}\n")
         f.close()
     print(request.remote_addr)
     print(request.headers.get('User-Agent'))
