@@ -11,63 +11,63 @@ app.config['SECRET_KEY'] = "edrftghyujikmlo,ikujhygtrf"
 
 @app.route("/")
 def home():
-    return render("home.html", "/")
+    return render("home.html")
 
 
 @app.route('/pl/')
 def pl_home_page():
-    log('pl/home.html', '/pl/')
+    log('pl/home.html')
     return render_template('pl/home.html')
 
 
 @app.route('/en/')
 def en_home_page():
-    log('en/home.html', '/en/')
+    log('en/home.html')
     return render_template('en/home.html')
 
 
 @app.route('/2s1b')
 def MCserwer_page():
-    log('pl/2s1b.html', '/2s1b')
+    log('pl/2s1b.html')
     return render_template('pl/2s1b.html')
 
 
 @app.route('/about_us')
 def about_us_page():
-    return render('about_us_page.html', '/about_us')
+    return render('about_us_page.html')
 
 
 @app.route('/help')
 def help_page():
-    return render('help.html', '/help')
+    return render('help.html')
 
 
 @app.route('/my_yt_page')
 def my_yt_page():
-    log('pl/mój_yt_1.html', '/my_yt_page')
+    log('pl/mój_yt_1.html')
     return render_template('pl/mój_yt_1.html')
 
 
 @app.route('/gra_win98')
 def gra_win98():
-    log('pl/gra_win98.html', '/gra_win98')
+    log('pl/gra_win98.html')
     return render_template('pl/gra_win98.html')
 
 
 @app.route('/program_downloads')
 def program_downloads():
-    return render('program_downloads.html', '/program_downloads')
+    return render('program_downloads.html')
 
 
 @app.route('/program_downloads/gra_miasta')
 def program_downloads_gra_miasta():
-    return render("gra_miasta.html", '/program_downloads/gra_miasta')
+    return render("gra_miasta.html")
 
 
 # tymczas
 @app.route('/program_downloads/gra_miasta/test')
 def program_downloads_gra_miasta_test():
-    log('pl/gra_miasta.html', '/program_downloads/gra_miasta/test')
+    log('pl/gra_miasta.html')
     return render_template('pl/gra_miasta.html')
 
 
@@ -75,30 +75,30 @@ def program_downloads_gra_miasta_test():
 
 @app.route('/program_downloads/gra_miasta/lastest_version')
 def gra_miasta_version():
-    log("Null", '/program_downloads/gra_miasta/lastest_version')
+    log("Null")
     response = requests.get("https://api.github.com/repos/Miasta-creators/Miasta_gra/releases/latest")
     return response.json()["name"]
 
 
 @app.route('/program_downloads/gra_miasta/update_info')
 def gra_miasta_update_info():
-    log("Null", '/program_downloads/gra_miasta/update_info')
+    log("Null")
     return "texture+jar"  # texture+jar
 
 
 @app.route('/atcatos')
 def ATcatOS():
-    log('pl/atcat_os_home.html', '/atcatos')
+    log('pl/atcat_os_home.html')
     return render_template('pl/atcat_os_home.html')
 
 
 @app.route('/electronics/boards/ports-to-data-bus-series')
 def PrtToDataBusBoardsSeries1():
-    log("Null", '/electronics/boards/ports-to-data-bus-series')
+    log("Null")
     return render_template('unfinished.html')
 
 
-def render(name, path):
+def render(name):
     lang = str(request.accept_languages)
     language = lang.split(",")
     ip = str(request.remote_addr)
