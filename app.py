@@ -104,10 +104,10 @@ def render(name, path):
     ip = str(request.remote_addr)
     if (language[0] == "pl"):
         log("pl/" + name, path)
-        return render_template("pl/" + name, ip=ip)
+        return render_template("pl/" + name, ip="   Twoje IP: "+ip)
     else:
         log("en/" + name, path)
-        return render_template("en/" + name, ip=ip)
+        return render_template("en/" + name, ip="   Your IP: "+ip)
 
 
 def log(name, path):
