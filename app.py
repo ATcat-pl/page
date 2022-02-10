@@ -1,6 +1,7 @@
 import datetime
 import time
 
+from wolfcrypt.ciphers import Aes, MODE_CBC
 import flask
 import requests
 import os
@@ -174,11 +175,17 @@ def log(name):
     if log_:
         if "UptimeRobot" not in str(request.headers.get('User-Agent')):
             if os.path.isfile("log/" + today.strftime("%d-%m-%Y") + ".txt"):
-                f = open("log/" + today.strftime("%d-%m-%Y") + ".txt", 'a')
+                f = open("log/" + today.strftime("%d-%m-%Y") + ".txt", 'a+b')
             else:
-                f = open("log/" + today.strftime("%d-%m-%Y") + ".txt", 'x')
+                f = open("log/" + today.strftime("%d-%m-%Y") + ".txt", 'x+b')
             t = time.localtime()
-            f.write("{\nTime: "+ f"{t.tm_hour}:{t.tm_min}:{t.tm_sec} \n" + "Request: " + request.full_path + ", file: " + name + "\nSecure: "+str(bool(request.is_secure))+"\nIP: " + str(request.remote_addr) + "\nTransmission method: "+ str(request.method) + "\nScheme: " + request.scheme + "\nUser-Agent: " + str(request.headers.get('User-Agent')) + "\n" + "Languages: " + str(request.accept_languages) + "\n" + "}\n")
+            ip = str(request.remote_addr)
+            bytestowrite = bytes("{\nTime: "+ f"{t.tm_hour}:{t.tm_min}:{t.tm_sec} \n" + "Request: " + request.full_path + ", file: " + name + "\nSecure: "+str(bool(request.is_secure))+"\nIP (encrypted): ", "UTF-8")
+            f.write(bytestowrite)
+            cipher = Aes("d7f13b40e992b51d587972057462c085b0b4dce0adb3c19cf7af64f7", MODE_CBC, b'1234567890abcdef')
+            f.write(cipher.encrypt(ip))
+            bytestowrite = bytes("\nTransmission method: "+ str(request.method) + "\nScheme: " + request.scheme + "\nUser-Agent: " + str(request.headers.get('User-Agent')) + "\n" + "Languages: " + str(request.accept_languages) + "\n" + "}\n", "UTF-8")
+            f.write(bytestowrite)
             f.close()
     print(request.remote_addr)
     print(request.headers.get('User-Agent'))
