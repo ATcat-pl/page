@@ -148,7 +148,7 @@ def log(name):
     print(request.headers.get('User-Agent'))
     print(request.accept_languages)
 
-    old = today - timedelta(days=10)
+    old = today - timedelta(days=3)
     if os.path.isfile("log/"+old.strftime("%d-%m-%Y")+".txt"):
         os.remove("log/"+old.strftime("%d-%m-%Y")+".txt")
         print("removed: log/"+old.strftime("%d-%m-%Y")+".txt")
