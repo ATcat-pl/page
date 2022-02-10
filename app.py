@@ -1,6 +1,6 @@
 import datetime
 import time
-import saferproxyfix
+from saferproxyfix import SaferProxyFix
 
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 import flask
@@ -181,7 +181,8 @@ def log(name):
                 f = open("log/" + today.strftime("%d-%m-%Y") + ".txt", 'x+b')
             t = time.localtime()
 
-            ip = saferproxyfix.get_remote_addr
+            app.wsgi_app = SaferProxyFix(app.wsgi_app)
+            ip = request.remote_addr
 
             while len(ip) % 16 != 0:
                 ip = ip + ' '
