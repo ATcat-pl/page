@@ -10,6 +10,8 @@ from flask import render_template, redirect, url_for, flash, request, Flask
 app = Flask(__name__)
 # app.config['SECRET_KEY'] = "edrftghyujikmlo,ikujhygtrf"
 log_ = True
+banned_user_agents = ["Go-http-client/1.1"]
+banned_ip = []
 
 active_users = []
 
@@ -154,16 +156,18 @@ def game_user_auth():
         return flask.Response(status=400)
 
 def render(name):
-    lang = str(request.accept_languages)
-    language = lang.split(",")
-    ip = str(request.remote_addr)
-    if (language[0] == "pl"):
-        log("pl/" + name)
-        return render_template("pl/" + name, ip="   Twoje IP: "+ip, log_=log_)
+    if str(request.headers.get('User-Agent')) not in banned_user_agents and str(request.remote_addr) not in banned_ip:
+        lang = str(request.accept_languages)
+        language = lang.split(",")
+        ip = str(request.remote_addr)
+        if (language[0] == "pl"):
+            log("pl/" + name)
+            return render_template("pl/" + name, ip="   Twoje IP: "+ip, log_=log_)
+        else:
+            log("en/" + name)
+            return render_template("en/" + name, ip="   Your IP: "+ip, log_=log_)
     else:
-        log("en/" + name)
-        return render_template("en/" + name, ip="   Your IP: "+ip, log_=log_)
-
+        return flask.Response(status=403)
 
 def log(name):
     today = date.today()
