@@ -7,6 +7,7 @@ import os
 from datetime import date, timedelta
 from flask import render_template, redirect, url_for, flash, request, Flask
 
+
 app = Flask(__name__)
 # app.config['SECRET_KEY'] = "edrftghyujikmlo,ikujhygtrf"
 
@@ -180,19 +181,19 @@ def log(name):
                 f = open("log/" + today.strftime("%d-%m-%Y") + ".txt", 'x+b')
             t = time.localtime()
 
-            if request.headers.getlist("X-Forwarded-For"):
-                ip = request.headers.getlist("X-Forwarded-For")[0]
-            else:
-                ip = request.remote_addr
-
-            while len(ip) % 16 != 0:
-                ip = ip + ' '
-            bytestowrite = bytes("{\nTime: "+ f"{t.tm_hour}:{t.tm_min}:{t.tm_sec} \n" + "Request: " + request.full_path + ", file: " + name + "\nSecure: "+str(bool(request.is_secure))+"\nIP (encrypted): ", "UTF-8")
+            # ip = request.remote_addr
+            # while len(ip) % 16 != 0:
+            #     ip = ip + ' '
+            bytestowrite = bytes("{\nTime: "+ f"{t.tm_hour}:{t.tm_min}:{t.tm_sec} \n" + "Request: " + request.full_path + ", file: " + name + "\nSecure: "+str(bool(request.is_secure))+"\nIP", "UTF-8")
             f.write(bytestowrite)
-            cipher = Cipher(algorithms.AES(bytes(os.environ['AES_key'], "UTF-8")), modes.CBC(bytes(os.environ['CBC_key'], "UTF-8")))
-            encryptor = cipher.encryptor()
-            encrypted = encryptor.update(bytes(ip, "UTF-8")) + encryptor.finalize()
-            f.write(bytes(encrypted.hex(), "UTF-8"))
+            # cipher = Cipher(algorithms.AES(bytes(os.environ['AES_key'], "UTF-8")), modes.CBC(bytes(os.environ['CBC_key'], "UTF-8")))
+            # encryptor = cipher.encryptor()
+            # encrypted = encryptor.update(bytes(ip, "UTF-8")) + encryptor.finalize()
+            # f.write(bytes(" (encrypted): +encrypted.hex(), "UTF-8"))
+            # !!!
+            # wyłączone bo wyśiwetla wewnętrzne ip w sieci i jeśli jest z zewnątrz to pokazuje ip routera
+            # !!!
+            f.write(bytes(": - ", "UTF-8"))
             bytestowrite = bytes("\nTransmission method: "+ str(request.method) + "\nScheme: " + request.scheme + "\nUser-Agent: " + str(request.headers.get('User-Agent')) + "\n" + "Languages: " + str(request.accept_languages) + "\n" + "}\n", "UTF-8")
             f.write(bytestowrite)
             f.close()
