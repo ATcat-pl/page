@@ -1,6 +1,7 @@
 import datetime
 import time
 
+import flask
 import requests
 import os
 from datetime import date, timedelta
@@ -8,6 +9,9 @@ from flask import render_template, redirect, url_for, flash, request, Flask
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "edrftghyujikmlo,ikujhygtrf"
+log_ = False
+
+active_users = []
 
 @app.route("/")
 def home():
@@ -97,6 +101,25 @@ def PrtToDataBusBoardsSeries1():
     log("Null")
     return render_template('unfinished.html')
 
+@app.route('/program_downloads/gra_miasta/user_auth')
+def game_user_auth():
+    userid = request.args.get('userid')
+    operation = request.args.get('operation')
+    if operation == "LogIn":
+        if userid not in active_users:
+            active_users.append(userid)
+            return f"OK"
+        else:
+            return f"User in use"
+    elif operation == "LogOut":
+        if userid in active_users:
+            active_users.remove(userid)
+            return f"Logged off"
+        else:
+            status_code = flask.Response(status=401)
+            return status_code
+    else:
+        return flask.Response(status=400)
 
 def render(name):
     lang = str(request.accept_languages)
@@ -104,22 +127,23 @@ def render(name):
     ip = str(request.remote_addr)
     if (language[0] == "pl"):
         log("pl/" + name)
-        return render_template("pl/" + name, ip="   Twoje IP: "+ip)
+        return render_template("pl/" + name, ip="   Twoje IP: "+ip, log_=log_)
     else:
         log("en/" + name)
-        return render_template("en/" + name, ip="   Your IP: "+ip)
+        return render_template("en/" + name, ip="   Your IP: "+ip, log_=log_)
 
 
 def log(name):
     today = date.today()
-    if "UptimeRobot" not in str(request.headers.get('User-Agent')):
-        if os.path.isfile("log/" + today.strftime("%d-%m-%Y") + ".txt"):
-            f = open("log/" + today.strftime("%d-%m-%Y") + ".txt", 'a')
-        else:
-            f = open("log/" + today.strftime("%d-%m-%Y") + ".txt", 'x')
-        t = time.localtime()
-        f.write("{\nTime: "+ f"{t.tm_hour}:{t.tm_min}:{t.tm_sec} \n" + "Request: " + request.path + ", file: " + name + "\nSecure: "+str(bool(request.is_secure))+"\nIP: " + str(request.remote_addr) + "\nTransmission method: "+ str(request.method) + "\nScheme: " + request.scheme + "\nUser-Agent: " + str(request.headers.get('User-Agent')) + "\n" + "Languages: " + str(request.accept_languages) + "\n" + "}\n")
-        f.close()
+    if log_:
+        if "UptimeRobot" not in str(request.headers.get('User-Agent')):
+            if os.path.isfile("log/" + today.strftime("%d-%m-%Y") + ".txt"):
+                f = open("log/" + today.strftime("%d-%m-%Y") + ".txt", 'a')
+            else:
+                f = open("log/" + today.strftime("%d-%m-%Y") + ".txt", 'x')
+            t = time.localtime()
+            f.write("{\nTime: "+ f"{t.tm_hour}:{t.tm_min}:{t.tm_sec} \n" + "Request: " + request.path + ", file: " + name + "\nSecure: "+str(bool(request.is_secure))+"\nIP: " + str(request.remote_addr) + "\nTransmission method: "+ str(request.method) + "\nScheme: " + request.scheme + "\nUser-Agent: " + str(request.headers.get('User-Agent')) + "\n" + "Languages: " + str(request.accept_languages) + "\n" + "}\n")
+            f.close()
     print(request.remote_addr)
     print(request.headers.get('User-Agent'))
     print(request.accept_languages)
