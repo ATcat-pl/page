@@ -1,7 +1,7 @@
 import datetime
 import time
 
-from wolfcrypt.ciphers import Aes, MODE_CBC
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 import flask
 import requests
 import os
@@ -180,10 +180,13 @@ def log(name):
                 f = open("log/" + today.strftime("%d-%m-%Y") + ".txt", 'x+b')
             t = time.localtime()
             ip = str(request.remote_addr)
+            while len(ip) % 16 != 0:
+                ip = ip + ' '
             bytestowrite = bytes("{\nTime: "+ f"{t.tm_hour}:{t.tm_min}:{t.tm_sec} \n" + "Request: " + request.full_path + ", file: " + name + "\nSecure: "+str(bool(request.is_secure))+"\nIP (encrypted): ", "UTF-8")
             f.write(bytestowrite)
-            cipher = Aes("d7f13b40e992b51d587972057462c085b0b4dce0adb3c19cf7af64f7", MODE_CBC, b'1234567890abcdef')
-            f.write(cipher.encrypt(ip))
+            cipher = Cipher(algorithms.AES(bytes(os.environ['AES_key'], "UTF-8")), modes.CBC(bytes(os.environ['CBC_key'], "UTF-8")))
+            encryptor = cipher.encryptor()
+            f.write(encryptor.update(bytes(ip, "UTF-8")) + encryptor.finalize())
             bytestowrite = bytes("\nTransmission method: "+ str(request.method) + "\nScheme: " + request.scheme + "\nUser-Agent: " + str(request.headers.get('User-Agent')) + "\n" + "Languages: " + str(request.accept_languages) + "\n" + "}\n", "UTF-8")
             f.write(bytestowrite)
             f.close()
