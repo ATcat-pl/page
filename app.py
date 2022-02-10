@@ -1,7 +1,5 @@
 import datetime
 import time
-from saferproxyfix import SaferProxyFix
-
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 import flask
 import requests
@@ -11,6 +9,7 @@ from flask import render_template, redirect, url_for, flash, request, Flask
 
 app = Flask(__name__)
 # app.config['SECRET_KEY'] = "edrftghyujikmlo,ikujhygtrf"
+
 log_ = True
 banned_user_agents = ["Go-http-client/1.1"]
 banned_ip = []
@@ -181,8 +180,10 @@ def log(name):
                 f = open("log/" + today.strftime("%d-%m-%Y") + ".txt", 'x+b')
             t = time.localtime()
 
-            app.wsgi_app = SaferProxyFix(app.wsgi_app)
-            ip = request.remote_addr
+            if request.headers.getlist("X-Forwarded-For"):
+                ip = request.headers.getlist("X-Forwarded-For")[0]
+            else:
+                ip = request.remote_addr
 
             while len(ip) % 16 != 0:
                 ip = ip + ' '
