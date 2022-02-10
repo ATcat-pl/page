@@ -164,10 +164,12 @@ def render(name):
         ip = str(request.remote_addr)
         if (language[0] == "pl"):
             log("pl/" + name)
-            return render_template("pl/" + name, ip="   Twoje IP: "+ip, log_=log_)
+            # return render_template("pl/" + name, ip="   Twoje IP: "+ip, log_=log_)
+            return render_template("pl/" + name, ip=" ", log_=log_)
         else:
             log("en/" + name)
-            return render_template("en/" + name, ip="   Your IP: "+ip, log_=log_)
+            # return render_template("en/" + name, ip="   Your IP: "+ip, log_=log_)
+            return render_template("en/" + name, ip=" ", log_=log_)
     else:
         return flask.Response(status=403)
 
@@ -193,6 +195,7 @@ def log(name):
             # !!!
             # wyłączone bo wyśiwetla wewnętrzne ip w sieci i jeśli jest z zewnątrz to pokazuje ip routera
             # !!!
+            # wyłączone jest w funkcjach: render(), log()
             f.write(bytes(": - ", "UTF-8"))
             bytestowrite = bytes("\nTransmission method: "+ str(request.method) + "\nScheme: " + request.scheme + "\nUser-Agent: " + str(request.headers.get('User-Agent')) + "\n" + "Languages: " + str(request.accept_languages) + "\n" + "}\n", "UTF-8")
             f.write(bytestowrite)
