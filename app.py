@@ -180,10 +180,8 @@ def log(name):
             else:
                 f = open("log/" + today.strftime("%d-%m-%Y") + ".txt", 'x+b')
             t = time.localtime()
-            if request.headers.getlist("X-Forwarded-For"):
-                ip = request.headers.getlist("X-Forwarded-For")[0]
-            else:
-                ip = request.remote_addr
+
+            ip = saferproxyfix.get_remote_addr
 
             while len(ip) % 16 != 0:
                 ip = ip + ' '
