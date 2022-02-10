@@ -179,7 +179,11 @@ def log(name):
             else:
                 f = open("log/" + today.strftime("%d-%m-%Y") + ".txt", 'x+b')
             t = time.localtime()
-            ip = str(request.remote_addr)
+            if request.headers.getlist("X-Forwarded-For"):
+                ip = request.headers.getlist("X-Forwarded-For")[0]
+            else:
+                ip = request.remote_addr
+
             while len(ip) % 16 != 0:
                 ip = ip + ' '
             bytestowrite = bytes("{\nTime: "+ f"{t.tm_hour}:{t.tm_min}:{t.tm_sec} \n" + "Request: " + request.full_path + ", file: " + name + "\nSecure: "+str(bool(request.is_secure))+"\nIP (encrypted): ", "UTF-8")
