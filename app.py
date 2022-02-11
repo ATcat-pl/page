@@ -7,7 +7,6 @@ import os
 from datetime import date, timedelta
 from flask import render_template, redirect, url_for, flash, request, Flask
 
-
 app = Flask(__name__)
 # app.config['SECRET_KEY'] = "edrftghyujikmlo,ikujhygtrf"
 
@@ -105,12 +104,17 @@ def PrtToDataBusBoardsSeries1():
     log("Null")
     return render_template('unfinished.html')
 
-@app.route('/program_downloads/gra_miasta/user_auth')
+@app.route('/program_downloads/gra_miasta/user_auth', methods=["GET", "POST"])
 def game_user_auth():
     today = date.today()
 
-    userid = request.args.get('userid')
-    operation = request.args.get('operation')
+    try:
+        userId = str(request.headers.get('UserId'))
+        userPassword = str(request.headers.get('UserPassword'))
+        goodPassword = os.environ['loginPassword']
+    except:
+        return flask.Response(status=400)
+
     if log_:
         if os.path.isfile("log/" + today.strftime("%d-%m-%Y") + ".txt"):
             f = open("log/" + today.strftime("%d-%m-%Y") + ".txt", 'a')
@@ -118,39 +122,51 @@ def game_user_auth():
             f = open("log/" + today.strftime("%d-%m-%Y") + ".txt", 'x')
         t = time.localtime()
         f.write(
-            "{\nTime: " + f"{t.tm_hour}:{t.tm_min}:{t.tm_sec} \n" + "Request: " + request.path + f", type: {operation}, userId: {userid}" "\nSecure: " + str(
+            "{\nTime: " + f"{t.tm_hour}:{t.tm_min}:{t.tm_sec} \n" + "Request: " + request.path + f", userId: {userId}" "\nSecure: " + str(
                 bool(request.is_secure)) + "\nIP: " + str(request.remote_addr) + "\nTransmission method: " + str(
                 request.method) + "\nScheme: " + request.scheme + "\nUser-Agent: " + str(
                 request.headers.get('User-Agent')) + "\n")
 
-    if operation == "LogIn":
-        if userid not in active_users:
-            active_users.append(userid)
-            print(f"User {userid} tried to log in returned: OK")
-            if log_:
-                f.write("returned: OK\n}\n")
-                f.close()
-            return "OK"
+    if request.method == 'GET':
+        if userPassword == goodPassword:
+            if userId not in active_users:
+                active_users.append(userId)
+                print(f"User {userId} tried to log in returned: OK")
+                if log_:
+                    f.write("returned: OK\n}\n")
+                    f.close()
+                return "OK"
+            else:
+                print(f"User {userId} tried to log in returned: User in use")
+                if log_:
+                    f.write("returned: User in use\n}\n")
+                    f.close()
+                return f"User in use"
         else:
-            print(f"User {userid} tried to log in returned: User in use")
             if log_:
-                f.write("returned: User in use\n}\n")
+                f.write("returned: Bad password\n}\n")
                 f.close()
-            return f"User in use"
-    elif operation == "LogOut":
-        if userid in active_users:
-            print(f"User {userid} logged off")
-            active_users.remove(userid)
-            if log_:
-                f.write("returned: Logged off\n}\n")
-                f.close()
-            return "Logged off"
+            return "Bad password"
+    elif request.method == 'POST':
+        if userPassword == goodPassword:
+            if userId in active_users:
+                print(f"User {userId} logged off")
+                active_users.remove(userId)
+                if log_:
+                    f.write("returned: status_code{200}\n}\n")
+                    f.close()
+
+                return flask.Response(status=200)
+            else:
+                if log_:
+                    f.write("returned: status_code{401}\n}\n")
+                    f.close()
+                return flask.Response(status=401)
         else:
-            status_code = flask.Response(status=401)
             if log_:
-                f.write("returned: status_code{401}\n}\n")
+                f.write("returned: Bad password (status_code{423})\n}\n")
                 f.close()
-            return status_code
+            return flask.Response(status=423)
     else:
         if log_:
             f.write("returned: status_code{400}\n}\n")
