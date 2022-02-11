@@ -144,9 +144,9 @@ def game_user_auth():
                 return f"User in use"
         else:
             if log_:
-                f.write("returned: Bad password\n}\n")
+                f.write("returned: Bad password (status_code{406})\n}\n")
                 f.close()
-            return "Bad password"
+            return flask.Response(status=406)
     elif request.method == 'POST':
         if userPassword == goodPassword:
             if userId in active_users:
@@ -164,9 +164,9 @@ def game_user_auth():
                 return flask.Response(status=401)
         else:
             if log_:
-                f.write("returned: Bad password (status_code{423})\n}\n")
+                f.write("returned: Bad password (status_code{406})\n}\n")
                 f.close()
-            return flask.Response(status=423)
+            return flask.Response(status=406)
     else:
         if log_:
             f.write("returned: status_code{400}\n}\n")
