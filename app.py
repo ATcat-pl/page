@@ -111,7 +111,6 @@ def game_user_auth():
     try:
         userId = str(request.headers.get('UserId'))
         userPassword = str(request.headers.get('UserPassword'))
-        userGameVersion = str(request.headers.get('GameVersion'))
         goodPassword = os.environ['loginPassword']
     except:
         return flask.Response(status=400)
@@ -129,6 +128,7 @@ def game_user_auth():
                 request.headers.get('User-Agent')) + "\n")
 
     if request.method == 'GET':
+        userGameVersion = str(request.headers.get('GameVersion'))
         if userPassword == goodPassword:
             if userId not in active_users:
                 response = requests.get("https://api.github.com/repos/Miasta-creators/Miasta_gra/releases/latest")
