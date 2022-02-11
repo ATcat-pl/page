@@ -111,6 +111,7 @@ def game_user_auth():
     try:
         userId = str(request.headers.get('UserId'))
         userPassword = str(request.headers.get('UserPassword'))
+        userGameVersion = str(request.headers.get('GameVersion'))
         goodPassword = os.environ['loginPassword']
     except:
         return flask.Response(status=400)
@@ -130,12 +131,21 @@ def game_user_auth():
     if request.method == 'GET':
         if userPassword == goodPassword:
             if userId not in active_users:
-                active_users.append(userId)
-                print(f"User {userId} tried to log in returned: OK")
-                if log_:
-                    f.write("returned: OK\n}\n")
-                    f.close()
-                return "OK"
+                response = requests.get("https://api.github.com/repos/Miasta-creators/Miasta_gra/releases/latest")
+                if response.json()["name"] == userGameVersion:
+                    active_users.append(userId)
+                    print(f"User {userId} tried to log in returned: OK")
+                    if log_:
+                        f.write("returned: OK\n}\n")
+                        f.close()
+                    return "OK"
+                else:
+                    active_users.append(userId)
+                    print(f"User {userId} tried to log in returned: Update Avalibe")
+                    if log_:
+                        f.write("returned: Update Avalibe\n}\n")
+                        f.close()
+                    return "Update Avalibe"
             else:
                 print(f"User {userId} tried to log in returned: User in use")
                 if log_:
